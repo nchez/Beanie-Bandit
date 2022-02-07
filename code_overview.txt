@@ -1,0 +1,17 @@
+Wireframe link - https://wireframe.cc/DlMbtg
+
+Create canvas -- might be similar to ogre/hero example
+ - use grid to make game screen and framework
+ - divs to make visor, beanie count, countdown timer
+
+Abstraction
+ - beanie class
+ - visor class
+ - STRETCH --> powerups, power downs, enemies
+
+Movement handler
+ - player movement
+ - classes movements
+
+Collision detection on beanies, visors
+ - STRETCH ---> powers, power downs, enemies
