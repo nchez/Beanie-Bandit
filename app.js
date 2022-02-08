@@ -61,6 +61,13 @@ let banditimg = new Image();
 banditimg.src = "./Assets/bandit_right.png";
 // ------------------------------------------
 
+// Random Num Function
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
 // Abstraction for Crawler class
 
 class Crawler {
@@ -85,7 +92,7 @@ let beanie1 = new Crawler(
   50,
   50,
   img1,
-  5
+  getRandomInt(5, 10)
 );
 let beanie2 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -93,7 +100,7 @@ let beanie2 = new Crawler(
   50,
   50,
   img2,
-  5
+  getRandomInt(5, 10)
 );
 let beanie3 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -101,7 +108,7 @@ let beanie3 = new Crawler(
   50,
   50,
   img3,
-  5
+  getRandomInt(5, 10)
 );
 let beanie4 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -109,7 +116,7 @@ let beanie4 = new Crawler(
   50,
   50,
   img4,
-  5
+  getRandomInt(5, 10)
 );
 let beanie5 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -117,7 +124,7 @@ let beanie5 = new Crawler(
   50,
   50,
   img5,
-  5
+  getRandomInt(5, 10)
 );
 let beanie6 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -125,7 +132,7 @@ let beanie6 = new Crawler(
   50,
   50,
   img6,
-  5
+  getRandomInt(5, 10)
 );
 let beanie7 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -133,7 +140,7 @@ let beanie7 = new Crawler(
   50,
   50,
   img7,
-  5
+  getRandomInt(5, 10)
 );
 let beanie8 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -141,7 +148,7 @@ let beanie8 = new Crawler(
   50,
   50,
   img8,
-  5
+  getRandomInt(5, 10)
 );
 let beanie9 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -149,7 +156,7 @@ let beanie9 = new Crawler(
   50,
   50,
   img9,
-  5
+  getRandomInt(5, 10)
 );
 let beanie10 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -157,7 +164,7 @@ let beanie10 = new Crawler(
   50,
   50,
   img10,
-  5
+  getRandomInt(5, 10)
 );
 let beanie11 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -165,7 +172,7 @@ let beanie11 = new Crawler(
   50,
   50,
   img11,
-  5
+  getRandomInt(5, 10)
 );
 let beanie12 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -173,7 +180,7 @@ let beanie12 = new Crawler(
   50,
   50,
   img12,
-  5
+  getRandomInt(5, 10)
 );
 
 let bandit = new Crawler(
@@ -186,17 +193,7 @@ let bandit = new Crawler(
 );
 // ------------------------------------------
 
-// Game Timer and Incrementer
-
-let gameTime = 60;
-
-function gameTimer() {
-  gameTime--;
-}
-
-setInterval(gameTimer, 1000);
-
-// Randomize and move beanies down
+// Randomize beanies
 
 let beanieArray = [
   beanie1,
@@ -222,6 +219,46 @@ function shuffle(arr) {
   }
   return arr;
 }
+
+// Game Timer and Incrementer
+let spawnedBeanies = [];
+let gameTime = 60;
+
+function gameTimer() {
+  gameTime--;
+  if (gameTime <= 0) {
+    gameTime = 0;
+  }
+}
+
+function createBeanies() {
+  let randBeanieNum = Math.floor(Math.random() * 12);
+  beanieArray[randBeanieNum].render();
+  spawnedBeanies.push(beanieArray[randBeanieNum]);
+}
+setInterval(createBeanies, getRandomInt(500, 1000));
+
+setInterval(gameTimer, 1000);
+
+// create Beanies
+
+function moveBeanies() {
+  if (spawnedBeanies.length != 0) {
+    for (let i = 0; i < spawnedBeanies.length; i++) {
+      if (spawnedBeanies[i].y <= canvas.height - 80) {
+        spawnedBeanies[i].y += spawnedBeanies[i].speed;
+        spawnedBeanies[i].render();
+      } else if (spawnedBeanies[i].y > canvas.height - 80) {
+        spawnedBeanies[i].y = 0;
+        spawnedBeanies[i].x = Math.floor(Math.random() * (canvas.width - 50));
+        spawnedBeanies[i].speed = getRandomInt(5, 10);
+        spawnedBeanies.splice(i, 1);
+        i--;
+      }
+    }
+  }
+}
+
 // Bandit Movement and Initialization
 
 banditimg.onload = bandit.render();
@@ -255,7 +292,13 @@ function timerCircle() {
 function timerCountdown() {
   ctx.font = "50px serif";
   ctx.fillStyle = "chartreuse";
-  ctx.fillText(gameTime, canvas.width / 2 - 25, 65);
+
+  // center and fill in gameTime
+  if (gameTime >= 10) {
+    ctx.fillText(gameTime, canvas.width / 2 - 25, 65);
+  } else {
+    ctx.fillText(gameTime, canvas.width / 2 - 13, 65);
+  }
 }
 
 // Game Loop
@@ -266,6 +309,7 @@ function gameLoop() {
   bandit.render();
   timerCircle();
   timerCountdown();
+  moveBeanies();
 }
 
 setInterval(gameLoop, 60);
