@@ -26,6 +26,7 @@ The player can move horizontally to catch the beanies and dodge the visors as th
 - Have player move horizontally to collect and dodge beanies and visors respectively
 - Implement game countdown
 - Implement visors collided display on-screen and end game when player hits three visors
+- Implement new game / reset button
 
 ## Stretch Goals
 

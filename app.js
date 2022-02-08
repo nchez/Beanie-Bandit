@@ -61,11 +61,16 @@ let banditimg = new Image();
 banditimg.src = "./Assets/bandit_right.png";
 // ------------------------------------------
 
-// Random Num Function
+// "higher" functions
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min) + min);
+}
+
+function drawBox(x, y, width, height, color) {
+  ctx.fillStyle = color;
+  ctx.fillRect(x, y, width, height);
 }
 
 // Abstraction for Crawler class
@@ -210,17 +215,8 @@ let beanieArray = [
   beanie12,
 ];
 
-function shuffle(arr) {
-  let currIndex = arr.length;
-  while (currIndex != 0) {
-    randIndex = Math.floor(Math.random() * currIndex);
-    currIndex--;
-    [arr[currIndex], arr[randIndex]] = [arr[randIndex], arr[currIndex]];
-  }
-  return arr;
-}
-
 // Game Timer and Incrementer
+let gameScore = 0;
 let spawnedBeanies = [];
 let gameTime = 60;
 
@@ -236,11 +232,12 @@ function createBeanies() {
   beanieArray[randBeanieNum].render();
   spawnedBeanies.push(beanieArray[randBeanieNum]);
 }
-setInterval(createBeanies, getRandomInt(500, 1000));
+// setInterval(createBeanies, getRandomInt(500, 1000));
+setInterval(createBeanies, 5000);
 
 setInterval(gameTimer, 1000);
 
-// create Beanies
+// create Beanies, reset Beanie function
 
 function moveBeanies() {
   if (spawnedBeanies.length != 0) {
@@ -275,7 +272,26 @@ function movementHandler() {
   //   if (pressedKeys.s) hero.y += speed;
   //   if (pressedKeys.w) hero.y -= speed;
 }
-//
+
+// Collision Detection
+function detectHatHit() {
+  for (let i = 0; i < spawnedBeanies.length; i++) {
+    const beanieLeft = bandit.x + bandit.width >= spawnedBeanies[i].x;
+    const beanieRight =
+      bandit.x <= spawnedBeanies[i].x + spawnedBeanies[i].width;
+    const beanieBottom =
+      bandit.y <= spawnedBeanies[i].y + spawnedBeanies[i].height;
+    if (beanieLeft && beanieRight && beanieBottom) {
+      gameScore += 1;
+      spawnedBeanies[i].y = 0;
+      spawnedBeanies[i].x = Math.floor(Math.random() * (canvas.width - 50));
+      spawnedBeanies[i].speed = getRandomInt(5, 10);
+      spawnedBeanies.splice(i, 1);
+      i--;
+    }
+    console.log(beanieLeft, beanieRight, beanieBottom);
+  }
+}
 
 // Game Countdown Circle
 
@@ -287,6 +303,13 @@ function timerCircle() {
   ctx.lineWidth = 2;
   ctx.strokeStyle = "red";
   ctx.stroke();
+}
+
+function scoreSquare() {
+  drawBox(25, 25, 100, 50, "black");
+  ctx.font = "50px serif";
+  ctx.fillStyle = "chartreuse";
+  ctx.fillText(gameScore, 60, 65);
 }
 
 function timerCountdown() {
@@ -310,15 +333,8 @@ function gameLoop() {
   timerCircle();
   timerCountdown();
   moveBeanies();
+  scoreSquare();
+  detectHatHit();
 }
 
 setInterval(gameLoop, 60);
-
-// setInterval(() => {
-//   beanie1.render();
-//   beanie1.x = Math.floor(Math.random() * canvas.width);
-// }, 1000);
-
-function detectHatHit() {
-  // just one conditional needed -- if hat
-}
