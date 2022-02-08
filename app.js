@@ -17,6 +17,50 @@ const ctx = canvas.getContext("2d");
 canvas.setAttribute("height", getComputedStyle(canvas)["height"]);
 canvas.setAttribute("width", getComputedStyle(canvas)["width"]);
 
+// Initialize Images and Assign to Variables
+
+let img1 = new Image();
+img1.src = "./Assets/beanies/beanie1.png";
+img1.onload = function () {};
+
+let img2 = new Image();
+img2.src = "./Assets/beanies/beanie2.png";
+img2.onload = function () {};
+let img3 = new Image();
+img3.src = "./Assets/beanies/beanie3.png";
+img3.onload = function () {};
+let img4 = new Image();
+img4.src = "./Assets/beanies/beanie4.png";
+img4.onload = function () {};
+let img5 = new Image();
+img5.src = "./Assets/beanies/beanie5.png";
+img5.onload = function () {};
+let img6 = new Image();
+img6.src = "./Assets/beanies/beanie6.png";
+img6.onload = function () {};
+let img7 = new Image();
+img7.src = "./Assets/beanies/beanie7.png";
+img7.onload = function () {};
+let img8 = new Image();
+img8.src = "./Assets/beanies/beanie8.png";
+img8.onload = function () {};
+let img9 = new Image();
+img9.src = "./Assets/beanies/beanie9.png";
+img9.onload = function () {};
+let img10 = new Image();
+img10.src = "./Assets/beanies/beanie10.png";
+img10.onload = function () {};
+let img11 = new Image();
+img11.src = "./Assets/beanies/beanie11.png";
+img11.onload = function () {};
+let img12 = new Image();
+img12.src = "./Assets/beanies/beanie12.png";
+img12.onload = function () {};
+
+let banditimg = new Image();
+banditimg.src = "./Assets/bandit_right.png";
+// ------------------------------------------
+
 // Abstraction for Crawler class
 
 class Crawler {
@@ -33,88 +77,104 @@ class Crawler {
   }
 }
 
-// Initialize Images and Assign to Variables
-
-let img1 = new Image();
-img1.src = "./Assets/beanies/beanie1.png";
-img1.onload = function () {
-  ctx.drawImage(img1, 50, 0, 50, 50);
-};
-
-let img2 = new Image();
-img2.src = "./Assets/beanies/beanie2.png";
-img2.onload = function () {
-  ctx.drawImage(img2, 200, 0, 75, 75);
-};
-let img3 = new Image();
-img3.src = "./Assets/beanies/beanie3.png";
-img3.onload = function () {
-  ctx.drawImage(img3, 200, 0, 75, 75);
-};
-let img4 = new Image();
-img4.src = "./Assets/beanies/beanie4.png";
-img4.onload = function () {
-  ctx.drawImage(img4, 200, 0, 75, 75);
-};
-let img5 = new Image();
-img5.src = "./Assets/beanies/beanie5.png";
-img5.onload = function () {
-  ctx.drawImage(img5, 200, 0, 75, 75);
-};
-let img6 = new Image();
-img6.src = "./Assets/beanies/beanie6.png";
-img6.onload = function () {
-  ctx.drawImage(img6, 200, 0, 75, 75);
-};
-let img7 = new Image();
-img7.src = "./Assets/beanies/beanie7.png";
-img7.onload = function () {
-  ctx.drawImage(img7, 200, 0, 75, 75);
-};
-let img8 = new Image();
-img8.src = "./Assets/beanies/beanie8.png";
-img8.onload = function () {
-  ctx.drawImage(img8, 200, 0, 75, 75);
-};
-let img9 = new Image();
-img9.src = "./Assets/beanies/beanie9.png";
-img9.onload = function () {
-  ctx.drawImage(img9, 200, 0, 75, 75);
-};
-let img10 = new Image();
-img10.src = "./Assets/beanies/beanie10.png";
-img10.onload = function () {
-  ctx.drawImage(img10, 200, 0, 75, 75);
-};
-let img11 = new Image();
-img11.src = "./Assets/beanies/beanie11.png";
-img11.onload = function () {
-  ctx.drawImage(img11, 200, 0, 75, 75);
-};
-let img12 = new Image();
-img12.src = "./Assets/beanies/beanie12.png";
-img12.onload = function () {
-  ctx.drawImage(img12, 200, 0, 75, 75);
-};
-
-let banditimg = new Image();
-banditimg.src = "./Assets/bandit_right.png";
-// ------------------------------------------
-
 // Create beanie and bandit classes
 
-let beanie1 = new Crawler(200, 0, 50, 50, img1);
-let beanie2 = new Crawler(100, 0, 50, 50, img2);
-let beanie3 = new Crawler(100, 0, 50, 50, img3);
-let beanie4 = new Crawler(100, 0, 50, 50, img4);
-let beanie5 = new Crawler(100, 0, 50, 50, img5);
-let beanie6 = new Crawler(100, 0, 50, 50, img6);
-let beanie7 = new Crawler(100, 0, 50, 50, img7);
-let beanie8 = new Crawler(100, 0, 50, 50, img8);
-let beanie9 = new Crawler(100, 0, 50, 50, img9);
-let beanie10 = new Crawler(100, 0, 50, 50, img10);
-let beanie11 = new Crawler(100, 0, 50, 50, img11);
-let beanie12 = new Crawler(100, 0, 50, 50, img12);
+let beanie1 = new Crawler(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img1,
+  5
+);
+let beanie2 = new Crawler(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img2,
+  5
+);
+let beanie3 = new Crawler(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img3,
+  5
+);
+let beanie4 = new Crawler(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img4,
+  5
+);
+let beanie5 = new Crawler(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img5,
+  5
+);
+let beanie6 = new Crawler(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img6,
+  5
+);
+let beanie7 = new Crawler(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img7,
+  5
+);
+let beanie8 = new Crawler(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img8,
+  5
+);
+let beanie9 = new Crawler(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img9,
+  5
+);
+let beanie10 = new Crawler(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img10,
+  5
+);
+let beanie11 = new Crawler(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img11,
+  5
+);
+let beanie12 = new Crawler(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img12,
+  5
+);
 
 let bandit = new Crawler(
   canvas.width / 2 - 75,
@@ -153,17 +213,6 @@ function shuffle(arr) {
   return arr;
 }
 
-function generateRandBeanies() {
-  for (let i = 0; i < beanieArray.length; i++) {
-    ctx.drawImage(beanieArray[i].image, beanieArray[i].x, beanieArray[i].y);
-    beanieArray[i].y += 5;
-    if (beanieArray[i].y > canvas.height) {
-      beanieArray[i].y = -50;
-      beanieArray[i].x = Math.floor(Math.random() * (canvas.width - 50));
-    }
-  }
-}
-
 banditimg.onload = bandit.render();
 
 function movementHandler() {
@@ -181,14 +230,16 @@ function movementHandler() {
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  // moveBeanies();
-  ctx.font = "50px serif";
-  ctx.fillText("Hello world", 400, 50);
   movementHandler();
   bandit.render();
 }
 
 setInterval(gameLoop, 60);
+
+setInterval(() => {
+  beanie1.render();
+  beanie1.x = Math.floor(Math.random() * canvas.width);
+}, 1000);
 
 function detectHatHit() {
   // just one conditional needed -- if hat
