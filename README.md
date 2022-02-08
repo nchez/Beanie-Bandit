@@ -17,4 +17,4 @@ The player can move horizontally to catch the beanies and dodge the visors as th
 
 ### Wireframe / Sketch
 
-![wireframe](Assets/wireframe.png)
+![wireframe](/Assets/wireframe.png)
