@@ -186,6 +186,16 @@ let bandit = new Crawler(
 );
 // ------------------------------------------
 
+// Game Timer and Incrementer
+
+let gameTime = 60;
+
+function gameTimer() {
+  gameTime--;
+}
+
+setInterval(gameTimer, 1000);
+
 // Randomize and move beanies down
 
 let beanieArray = [
@@ -212,6 +222,7 @@ function shuffle(arr) {
   }
   return arr;
 }
+// Bandit Movement and Initialization
 
 banditimg.onload = bandit.render();
 
@@ -227,19 +238,42 @@ function movementHandler() {
   //   if (pressedKeys.s) hero.y += speed;
   //   if (pressedKeys.w) hero.y -= speed;
 }
+//
+
+// Game Countdown Circle
+
+function timerCircle() {
+  ctx.beginPath();
+  ctx.arc(canvas.width / 2, 50, 40, 0, 2 * Math.PI, false);
+  ctx.fillStyle = "black";
+  ctx.fill();
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = "red";
+  ctx.stroke();
+}
+
+function timerCountdown() {
+  ctx.font = "50px serif";
+  ctx.fillStyle = "chartreuse";
+  ctx.fillText(gameTime, canvas.width / 2 - 25, 65);
+}
+
+// Game Loop
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   movementHandler();
   bandit.render();
+  timerCircle();
+  timerCountdown();
 }
 
 setInterval(gameLoop, 60);
 
-setInterval(() => {
-  beanie1.render();
-  beanie1.x = Math.floor(Math.random() * canvas.width);
-}, 1000);
+// setInterval(() => {
+//   beanie1.render();
+//   beanie1.x = Math.floor(Math.random() * canvas.width);
+// }, 1000);
 
 function detectHatHit() {
   // just one conditional needed -- if hat
