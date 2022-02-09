@@ -1,3 +1,10 @@
+/* Oliver Tree Audio */
+let myAudio = document.getElementById("myAudio");
+
+function togglePlay() {
+  return myAudio.paused ? myAudio.play() : myAudio.pause();
+}
+
 /* DOM SELECTORS -- EVENT LISTENERS */
 const canvas = document.querySelector("#canvas");
 const pressedKeys = {};
@@ -5,8 +12,6 @@ document.addEventListener("keydown", (e) => (pressedKeys[e.key] = true));
 document.addEventListener("keyup", (e) => (pressedKeys[e.key] = false));
 const resetButton = document.getElementById("btm-right");
 const startButton = document.getElementById("btm-left");
-
-const movementDisplay = document.querySelector("#movement");
 
 // document.addEventListener("keyup", movementHandler); // stretch goals might be useful
 
@@ -23,6 +28,7 @@ function setBackgroundSize() {
   document.getElementById("canvas").style.backgroundSize =
     canvas.width + "px " + canvas.height + "px";
 }
+setBackgroundSize();
 
 // Initialize Images and Assign to Variables
 
@@ -294,7 +300,7 @@ let bandit = new Crawler(
 
 // Beanie and Visor Arrays
 
-let beanieArray = [
+const beanieArray = [
   beanie1,
   beanie2,
   beanie3,
@@ -309,12 +315,12 @@ let beanieArray = [
   beanie12,
 ];
 
-let visorArray = [visor1, visor2, visor3, visor4, visor5, visor6, visor7];
+const visorArray = [visor1, visor2, visor3, visor4, visor5, visor6, visor7];
 
 // Game Timer and Incrementer
 let gameScore = 0;
 let spawnedHats = [];
-let gameTime = 2;
+let gameTime = 60;
 let visorCount = 0;
 
 function gameTimer() {
@@ -359,8 +365,10 @@ function moveBeanies() {
 }
 
 // Bandit Movement and Initialization
+banditimg.onload = function () {};
 
-banditimg.onload = bandit.render();
+// Can this be moved?
+// banditimg.onload = bandit.render();
 
 function movementHandler() {
   if (bandit.x >= 10) {
@@ -430,7 +438,11 @@ function scoreSquare() {
 function scoreLabels() {
   ctx.font = "30px serif";
   ctx.fillStyle = "chartreuse";
-  ctx.fillText("SCORE", 27, 40);
+  if (gameScore >= 10) {
+    ctx.fillText("SCORE", 24, 40);
+  } else {
+    ctx.fillText("SCORE", 29, 40);
+  }
 }
 
 //  Visor Count and X's
@@ -511,6 +523,8 @@ function threeVisors() {
   }
 }
 
+// Dynamic Background and Growing Sung
+
 // Game Loop and Reset
 
 function gameLoop() {
@@ -534,8 +548,7 @@ let beanieInterval = setInterval(createBeanies, getRandomInt(500, 1000));
 let visorInterval = setInterval(createVisors, 1000);
 let gameTimerInterval = setInterval(gameTimer, 1000);
 
-//  These break the game; need to fix
-
+//  This breaks the game; need to fix
 /*
 startButton.addEventListener("click", () => {
   let intervalId = setInterval(gameLoop, 60);
@@ -543,17 +556,21 @@ startButton.addEventListener("click", () => {
   let visorInterval = setInterval(createVisors, 1000);
   let gameTimerInterval = setInterval(gameTimer, 1000);
 });
+*/
 
-
+// causes the filltext to be misaligned
 function reset() {
+  canvas.setAttribute("height", getComputedStyle(canvas)["height"]);
+  canvas.setAttribute("width", getComputedStyle(canvas)["width"]);
   clearInterval(intervalId);
   clearInterval(beanieInterval);
   clearInterval(visorInterval);
   clearInterval(gameTimerInterval);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  setBackgroundSize();
   gameScore = 0;
   spawnedHats = [];
-  gameTime = 30;
+  gameTime = 60;
   visorCount = 0;
   for (let i = 0; i < beanieArray.length; i++) {
     beanieArray[i].speed = getRandomInt(5, 10);
@@ -568,4 +585,3 @@ function reset() {
 }
 
 resetButton.addEventListener("click", reset);
-*/

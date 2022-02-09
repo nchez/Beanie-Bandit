@@ -10,15 +10,22 @@
   <body>
     <div id="container">
       <main>
-        <canvas id="canvas"><!-- play it, a game --></canvas>
+        <canvas id="canvas"></canvas>
       </main>
-      <aside id="btm-left"><h2>100</h2></aside>
+      <aside id="btm-left">
+        <audio
+          id="myAudio"
+          src="./Assets/Oliver_Tree_Let_Me_Down_8bit.mp3"
+          preload="auto"
+        ></audio>
+        <a onClick="togglePlay()">Press to Play/Pause Music</a>
+      </aside>
       <aside id="btm-middle">
         <h2>
           Use A/D keys or left/right arrows to collect beanies and avoid visors!
         </h2>
       </aside>
-      <aside id="btm-right"><h2 id="status">play the game</h2></aside>
+      <aside id="btm-right"><h2 id="status">RESET / NEW GAME</h2></aside>
     </div>
     <script defer src="app.js"></script>
   </body>
