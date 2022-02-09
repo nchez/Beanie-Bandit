@@ -17,12 +17,18 @@ const ctx = canvas.getContext("2d");
 canvas.setAttribute("height", getComputedStyle(canvas)["height"]);
 canvas.setAttribute("width", getComputedStyle(canvas)["width"]);
 
+function setBackgroundSize() {
+  document.getElementById("canvas").style.backgroundSize =
+    canvas.width + "px " + canvas.height + "px";
+}
+
 // Initialize Images and Assign to Variables
 
 let img1 = new Image();
 img1.src = "./Assets/beanies/beanie1.png";
 img1.onload = function () {};
 
+//  Beanie Images
 let img2 = new Image();
 img2.src = "./Assets/beanies/beanie2.png";
 img2.onload = function () {};
@@ -57,6 +63,29 @@ let img12 = new Image();
 img12.src = "./Assets/beanies/beanie12.png";
 img12.onload = function () {};
 
+// Visor and Bandit Image
+let img13 = new Image();
+img13.src = "./Assets/visors/visor1.png";
+img13.onload = function () {};
+let img14 = new Image();
+img14.src = "./Assets/visors/visor2.png";
+img14.onload = function () {};
+let img15 = new Image();
+img15.src = "./Assets/visors/visor3.png";
+img15.onload = function () {};
+let img16 = new Image();
+img16.src = "./Assets/visors/visor4.png";
+img16.onload = function () {};
+let img17 = new Image();
+img17.src = "./Assets/visors/visor5.png";
+img17.onload = function () {};
+let img18 = new Image();
+img18.src = "./Assets/visors/visor6.png";
+img18.onload = function () {};
+let img19 = new Image();
+img19.src = "./Assets/visors/visor7.png";
+img19.onload = function () {};
+
 let banditimg = new Image();
 banditimg.src = "./Assets/bandit_right.png";
 // ------------------------------------------
@@ -89,7 +118,13 @@ class Crawler {
   }
 }
 
-// Create beanie and bandit classes
+class Visor extends Crawler {
+  constructor(x, y, width, height, image, speed) {
+    super(x, y, width, height, image, speed);
+  }
+}
+
+// Create beanie, visor and bandit objects
 
 let beanie1 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -188,17 +223,74 @@ let beanie12 = new Crawler(
   getRandomInt(5, 10)
 );
 
+let visor1 = new Visor(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img13,
+  getRandomInt(5, 10)
+);
+let visor2 = new Visor(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img14,
+  getRandomInt(5, 10)
+);
+let visor3 = new Visor(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img15,
+  getRandomInt(5, 10)
+);
+let visor4 = new Visor(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img16,
+  getRandomInt(5, 10)
+);
+let visor5 = new Visor(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img17,
+  getRandomInt(5, 10)
+);
+let visor6 = new Visor(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img18,
+  getRandomInt(5, 10)
+);
+let visor7 = new Visor(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  img19,
+  getRandomInt(5, 10)
+);
+
 let bandit = new Crawler(
   canvas.width / 2 - 75,
-  canvas.height - 175,
-  150,
-  150,
+  canvas.height - 125,
+  100,
+  100,
   banditimg,
   15
 );
 // ------------------------------------------
 
-// Randomize beanies
+// Beanie and Visor Arrays
 
 let beanieArray = [
   beanie1,
@@ -215,10 +307,13 @@ let beanieArray = [
   beanie12,
 ];
 
+let visorArray = [visor1, visor2, visor3, visor4, visor5, visor6, visor7];
+
 // Game Timer and Incrementer
 let gameScore = 0;
-let spawnedBeanies = [];
+let spawnedHats = [];
 let gameTime = 60;
+let visorCount = 0;
 
 function gameTimer() {
   gameTime--;
@@ -227,29 +322,38 @@ function gameTimer() {
   }
 }
 
+// Create Beanies and Hats
+
 function createBeanies() {
   let randBeanieNum = Math.floor(Math.random() * 12);
   beanieArray[randBeanieNum].render();
-  spawnedBeanies.push(beanieArray[randBeanieNum]);
+  spawnedHats.push(beanieArray[randBeanieNum]);
 }
-// setInterval(createBeanies, getRandomInt(500, 1000));
-setInterval(createBeanies, 5000);
+
+function createVisors() {
+  let randVisorNum = Math.floor(Math.random() * 7);
+  visorArray[randVisorNum].render();
+  spawnedHats.push(visorArray[randVisorNum]);
+}
+
+setInterval(createBeanies, getRandomInt(500, 1000));
+setInterval(createVisors, 1000);
 
 setInterval(gameTimer, 1000);
 
 // create Beanies, reset Beanie function
 
 function moveBeanies() {
-  if (spawnedBeanies.length != 0) {
-    for (let i = 0; i < spawnedBeanies.length; i++) {
-      if (spawnedBeanies[i].y <= canvas.height - 80) {
-        spawnedBeanies[i].y += spawnedBeanies[i].speed;
-        spawnedBeanies[i].render();
-      } else if (spawnedBeanies[i].y > canvas.height - 80) {
-        spawnedBeanies[i].y = 0;
-        spawnedBeanies[i].x = Math.floor(Math.random() * (canvas.width - 50));
-        spawnedBeanies[i].speed = getRandomInt(5, 10);
-        spawnedBeanies.splice(i, 1);
+  if (spawnedHats.length != 0) {
+    for (let i = 0; i < spawnedHats.length; i++) {
+      if (spawnedHats[i].y <= canvas.height - 80) {
+        spawnedHats[i].y += spawnedHats[i].speed;
+        spawnedHats[i].render();
+      } else if (spawnedHats[i].y > canvas.height - 80) {
+        spawnedHats[i].y = 0;
+        spawnedHats[i].x = Math.floor(Math.random() * (canvas.width - 50));
+        spawnedHats[i].speed = getRandomInt(5, 10);
+        spawnedHats.splice(i, 1);
         i--;
       }
     }
@@ -261,39 +365,51 @@ function moveBeanies() {
 banditimg.onload = bandit.render();
 
 function movementHandler() {
-  if (pressedKeys.a) {
-    bandit.x -= bandit.speed;
-    bandit.image.src = "./Assets/bandit_left.png";
+  if (bandit.x >= 10) {
+    if (pressedKeys.a || pressedKeys.ArrowLeft) {
+      bandit.x -= bandit.speed;
+      bandit.image.src = "./Assets/bandit_left.png";
+    }
   }
-  if (pressedKeys.d) {
-    bandit.x += bandit.speed;
-    bandit.image.src = "./Assets/bandit_right.png";
-  }
-  //   if (pressedKeys.s) hero.y += speed;
-  //   if (pressedKeys.w) hero.y -= speed;
+  if (bandit.x <= canvas.width - 160)
+    if (pressedKeys.d || pressedKeys.ArrowRight) {
+      bandit.x += bandit.speed;
+      bandit.image.src = "./Assets/bandit_right.png";
+    }
 }
 
 // Collision Detection
 function detectHatHit() {
-  for (let i = 0; i < spawnedBeanies.length; i++) {
-    const beanieLeft = bandit.x + bandit.width >= spawnedBeanies[i].x;
-    const beanieRight =
-      bandit.x <= spawnedBeanies[i].x + spawnedBeanies[i].width;
-    const beanieBottom =
-      bandit.y <= spawnedBeanies[i].y + spawnedBeanies[i].height;
-    if (beanieLeft && beanieRight && beanieBottom) {
-      gameScore += 1;
-      spawnedBeanies[i].y = 0;
-      spawnedBeanies[i].x = Math.floor(Math.random() * (canvas.width - 50));
-      spawnedBeanies[i].speed = getRandomInt(5, 10);
-      spawnedBeanies.splice(i, 1);
+  for (let i = 0; i < spawnedHats.length; i++) {
+    const hatsLeft = bandit.x + bandit.width >= spawnedHats[i].x;
+    const hatsRight = bandit.x <= spawnedHats[i].x + spawnedHats[i].width;
+    const hatsBottom = bandit.y <= spawnedHats[i].y + spawnedHats[i].height;
+    if (hatsLeft && hatsRight && hatsBottom) {
+      if (spawnedHats[i] instanceof Visor) {
+        visorCount++;
+      } else {
+        gameScore++;
+      }
+      spawnedHats[i].y = 0;
+      spawnedHats[i].x = Math.floor(Math.random() * (canvas.width - 50));
+      spawnedHats[i].speed = getRandomInt(5, 10);
+      spawnedHats.splice(i, 1);
       i--;
     }
-    console.log(beanieLeft, beanieRight, beanieBottom);
   }
 }
 
-// Game Countdown Circle
+// Game Labels and Timer
+function timerCountdown() {
+  ctx.font = "50px serif";
+  ctx.fillStyle = "chartreuse";
+
+  if (gameTime >= 10) {
+    ctx.fillText(gameTime, canvas.width / 2 - 25, 65);
+  } else {
+    ctx.fillText(gameTime, canvas.width / 2 - 13, 65);
+  }
+}
 
 function timerCircle() {
   ctx.beginPath();
@@ -306,21 +422,45 @@ function timerCircle() {
 }
 
 function scoreSquare() {
-  drawBox(25, 25, 100, 50, "black");
+  drawBox(25, 15, 100, 75, "black");
   ctx.font = "50px serif";
   ctx.fillStyle = "chartreuse";
-  ctx.fillText(gameScore, 60, 65);
+  ctx.fillText(gameScore, 60, 80);
 }
 
-function timerCountdown() {
-  ctx.font = "50px serif";
+function scoreLabels() {
+  ctx.font = "30px serif";
   ctx.fillStyle = "chartreuse";
+  ctx.fillText("SCORE", 27, 40);
+}
 
-  // center and fill in gameTime
-  if (gameTime >= 10) {
-    ctx.fillText(gameTime, canvas.width / 2 - 25, 65);
-  } else {
-    ctx.fillText(gameTime, canvas.width / 2 - 13, 65);
+//  Visor Count and X's
+function visorSquare() {
+  drawBox(canvas.width - 150, 15, 125, 75, "black");
+  drawBox(canvas.width - 145, 50, 30, 30, "white");
+  drawBox(canvas.width - 102, 50, 30, 30, "white");
+  drawBox(canvas.width - 60, 50, 30, 30, "white");
+  ctx.font = "18px serif";
+  ctx.fillStyle = "chartreuse";
+  ctx.fillText("VISOR COUNT", canvas.width - 148, 40);
+}
+
+function checkVisors() {
+  if (visorCount === 1) {
+    ctx.font = "30px serif";
+    ctx.fillStyle = "red";
+    ctx.fillText("X", canvas.width - 141, 75);
+  } else if (visorCount === 2) {
+    ctx.font = "30px serif";
+    ctx.fillStyle = "red";
+    ctx.fillText("X", canvas.width - 141, 75);
+    ctx.fillText("X", canvas.width - 98, 75);
+  } else if (visorCount === 3) {
+    ctx.font = "30px serif";
+    ctx.fillStyle = "red";
+    ctx.fillText("X", canvas.width - 141, 75);
+    ctx.fillText("X", canvas.width - 98, 75);
+    ctx.fillText("X", canvas.width - 56, 75);
   }
 }
 
@@ -328,12 +468,16 @@ function timerCountdown() {
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  setBackgroundSize();
   movementHandler();
   bandit.render();
   timerCircle();
   timerCountdown();
   moveBeanies();
   scoreSquare();
+  visorSquare();
+  checkVisors();
+  scoreLabels();
   detectHatHit();
 }
 

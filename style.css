@@ -21,9 +21,8 @@ h2 {
 }
 
 canvas {
-  /* background-image: url('../img/stone.png'); */
-  /* background-repeat: repeat; */
-  background-color: white;
+  background-image: url("https://images.pond5.com/car-luggage-road-hd-animation-footage-088920201_prevstill.jpeg");
+  background-repeat: no-repeat;
   width: 100%;
   height: 100;
 }
