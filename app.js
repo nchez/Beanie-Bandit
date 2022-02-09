@@ -3,6 +3,8 @@ const canvas = document.querySelector("#canvas");
 const pressedKeys = {};
 document.addEventListener("keydown", (e) => (pressedKeys[e.key] = true));
 document.addEventListener("keyup", (e) => (pressedKeys[e.key] = false));
+const resetButton = document.getElementById("btm-right");
+const startButton = document.getElementById("btm-left");
 
 const movementDisplay = document.querySelector("#movement");
 
@@ -312,13 +314,14 @@ let visorArray = [visor1, visor2, visor3, visor4, visor5, visor6, visor7];
 // Game Timer and Incrementer
 let gameScore = 0;
 let spawnedHats = [];
-let gameTime = 60;
+let gameTime = 2;
 let visorCount = 0;
 
 function gameTimer() {
   gameTime--;
-  if (gameTime <= 0) {
+  if (gameTime < 0) {
     gameTime = 0;
+    timesUp();
   }
 }
 
@@ -335,11 +338,6 @@ function createVisors() {
   visorArray[randVisorNum].render();
   spawnedHats.push(visorArray[randVisorNum]);
 }
-
-setInterval(createBeanies, getRandomInt(500, 1000));
-setInterval(createVisors, 1000);
-
-setInterval(gameTimer, 1000);
 
 // create Beanies, reset Beanie function
 
@@ -404,6 +402,7 @@ function timerCountdown() {
   ctx.font = "50px serif";
   ctx.fillStyle = "chartreuse";
 
+  // Align timecount if double digits or single digits
   if (gameTime >= 10) {
     ctx.fillText(gameTime, canvas.width / 2 - 25, 65);
   } else {
@@ -455,7 +454,9 @@ function checkVisors() {
     ctx.fillStyle = "red";
     ctx.fillText("X", canvas.width - 141, 75);
     ctx.fillText("X", canvas.width - 98, 75);
-  } else if (visorCount === 3) {
+  }
+  // Not needed?
+  else if (visorCount === 3) {
     ctx.font = "30px serif";
     ctx.fillStyle = "red";
     ctx.fillText("X", canvas.width - 141, 75);
@@ -464,7 +465,53 @@ function checkVisors() {
   }
 }
 
-// Game Loop
+// Times up and Visor Condition
+function timesUp() {
+  if (visorCount < 3) {
+    drawBox(canvas.width / 2 - 200, canvas.height / 2 - 50, 400, 150, "black");
+    clearInterval(intervalId);
+    clearInterval(beanieInterval);
+    clearInterval(visorInterval);
+    ctx.font = "30px serif";
+    ctx.fillStyle = "red";
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "center";
+    // Need to fix x, y positions so they are relative (screen size changes things), not absolute
+    ctx.fillText("TIME EXPIRED!", canvas.width / 2, canvas.height / 2 - 30);
+    ctx.fillText("YOUR SCORE:", canvas.width / 2, canvas.height / 2);
+    ctx.font = "100px serif";
+    ctx.fillStyle = "chartreuse";
+    ctx.fillText(gameScore, canvas.width / 2, canvas.height / 2 + 60);
+  }
+}
+
+function threeVisors() {
+  if (visorCount === 3) {
+    ctx.font = "30px serif";
+    ctx.fillStyle = "red";
+    ctx.fillText("X", canvas.width - 56, 75);
+    drawBox(canvas.width / 2 - 200, canvas.height / 2 - 50, 400, 150, "black");
+    clearInterval(intervalId);
+    clearInterval(beanieInterval);
+    clearInterval(visorInterval);
+    ctx.font = "30px serif";
+    ctx.fillStyle = "red";
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "center";
+    // Need to fix x, y positions so they are relative (screen size changes things), not absolute
+    ctx.fillText(
+      "EW, THREE VISORS HIT!",
+      canvas.width / 2,
+      canvas.height / 2 - 30
+    );
+    ctx.fillText("YOUR SCORE:", canvas.width / 2, canvas.height / 2);
+    ctx.font = "100px serif";
+    ctx.fillStyle = "chartreuse";
+    ctx.fillText(gameScore, canvas.width / 2, canvas.height / 2 + 60);
+  }
+}
+
+// Game Loop and Reset
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -479,6 +526,46 @@ function gameLoop() {
   checkVisors();
   scoreLabels();
   detectHatHit();
+  threeVisors();
 }
 
-setInterval(gameLoop, 60);
+let intervalId = setInterval(gameLoop, 60);
+let beanieInterval = setInterval(createBeanies, getRandomInt(500, 1000));
+let visorInterval = setInterval(createVisors, 1000);
+let gameTimerInterval = setInterval(gameTimer, 1000);
+
+//  These break the game; need to fix
+
+/*
+startButton.addEventListener("click", () => {
+  let intervalId = setInterval(gameLoop, 60);
+  let beanieInterval = setInterval(createBeanies, getRandomInt(500, 1000));
+  let visorInterval = setInterval(createVisors, 1000);
+  let gameTimerInterval = setInterval(gameTimer, 1000);
+});
+
+
+function reset() {
+  clearInterval(intervalId);
+  clearInterval(beanieInterval);
+  clearInterval(visorInterval);
+  clearInterval(gameTimerInterval);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  gameScore = 0;
+  spawnedHats = [];
+  gameTime = 30;
+  visorCount = 0;
+  for (let i = 0; i < beanieArray.length; i++) {
+    beanieArray[i].speed = getRandomInt(5, 10);
+  }
+  for (let i = 0; i < visorArray.length; i++) {
+    visorArray[i].speed = getRandomInt(5, 10);
+  }
+  beanieInterval = setInterval(createBeanies, getRandomInt(500, 1000));
+  visorInterval = setInterval(createVisors, 1000);
+  intervalId = setInterval(gameLoop, 60);
+  gameTimerInterval = setInterval(gameTimer, 1000);
+}
+
+resetButton.addEventListener("click", reset);
+*/
