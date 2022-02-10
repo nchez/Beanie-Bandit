@@ -15,3 +15,9 @@ Movement handler
 
 Collision detection on beanies, visors
  - STRETCH ---> powers, power downs, enemies
+
+
+
+for bandit x y
+   canvas.width / 2 - 75,
+  canvas.height - 125,

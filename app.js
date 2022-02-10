@@ -6,12 +6,20 @@ function togglePlay() {
 }
 
 /* DOM SELECTORS -- EVENT LISTENERS */
+const startScreen = document.querySelector("#start-screen");
+const startButton = document.querySelector("#start-button");
 const canvas = document.querySelector("#canvas");
 const pressedKeys = {};
 document.addEventListener("keydown", (e) => (pressedKeys[e.key] = true));
 document.addEventListener("keyup", (e) => (pressedKeys[e.key] = false));
 const resetButton = document.getElementById("btm-right");
-const startButton = document.getElementById("btm-left");
+
+// set canvas size to be the same as window
+// after the window computes -- set canvas to be actual size of space it takes up
+setTimeout(() => {
+  canvas.setAttribute("height", getComputedStyle(canvas)["height"]);
+  canvas.setAttribute("width", getComputedStyle(canvas)["width"]);
+}, 50);
 
 // document.addEventListener("keyup", movementHandler); // stretch goals might be useful
 
@@ -19,16 +27,10 @@ const startButton = document.getElementById("btm-left");
 // setup the renderer
 const ctx = canvas.getContext("2d");
 
-// set canvas size to be the same as window
-// after the window computes -- set canvas to be actual size of space it takes up
-canvas.setAttribute("height", getComputedStyle(canvas)["height"]);
-canvas.setAttribute("width", getComputedStyle(canvas)["width"]);
-
 function setBackgroundSize() {
   document.getElementById("canvas").style.backgroundSize =
     canvas.width + "px " + canvas.height + "px";
 }
-setBackgroundSize();
 
 // Initialize Images and Assign to Variables
 
@@ -287,15 +289,7 @@ let visor7 = new Visor(
   img19,
   getRandomInt(5, 10)
 );
-
-let bandit = new Crawler(
-  canvas.width / 2 - 75,
-  canvas.height - 125,
-  100,
-  100,
-  banditimg,
-  15
-);
+let bandit = new Crawler("", "", 100, 100, banditimg, 15);
 // ------------------------------------------
 
 // Beanie and Visor Arrays
@@ -367,9 +361,6 @@ function moveBeanies() {
 // Bandit Movement and Initialization
 banditimg.onload = function () {};
 
-// Can this be moved?
-// banditimg.onload = bandit.render();
-
 function movementHandler() {
   if (bandit.x >= 10) {
     if (pressedKeys.a || pressedKeys.ArrowLeft) {
@@ -377,7 +368,7 @@ function movementHandler() {
       bandit.image.src = "./Assets/bandit_left.png";
     }
   }
-  if (bandit.x <= canvas.width - 160)
+  if (bandit.x <= canvas.width - 120)
     if (pressedKeys.d || pressedKeys.ArrowRight) {
       bandit.x += bandit.speed;
       bandit.image.src = "./Assets/bandit_right.png";
@@ -432,17 +423,18 @@ function scoreSquare() {
   drawBox(25, 15, 100, 75, "black");
   ctx.font = "50px serif";
   ctx.fillStyle = "chartreuse";
-  ctx.fillText(gameScore, 60, 80);
+  // position gamescore if single digits or double digits
+  if (gameScore < 10) {
+    ctx.fillText(gameScore, 60, 80);
+  } else {
+    ctx.fillText(gameScore, 50, 80);
+  }
 }
 
 function scoreLabels() {
   ctx.font = "30px serif";
   ctx.fillStyle = "chartreuse";
-  if (gameScore >= 10) {
-    ctx.fillText("SCORE", 24, 40);
-  } else {
-    ctx.fillText("SCORE", 29, 40);
-  }
+  ctx.fillText("SCORE", 26, 40);
 }
 
 //  Visor Count and X's
@@ -523,7 +515,7 @@ function threeVisors() {
   }
 }
 
-// Dynamic Background and Growing Sung
+// Dynamic Background and Growing Sun
 
 // Game Loop and Reset
 
@@ -543,22 +535,32 @@ function gameLoop() {
   threeVisors();
 }
 
-let intervalId = setInterval(gameLoop, 60);
-let beanieInterval = setInterval(createBeanies, getRandomInt(500, 1000));
-let visorInterval = setInterval(createVisors, 1000);
-let gameTimerInterval = setInterval(gameTimer, 1000);
-
-//  This breaks the game; need to fix
 /*
-startButton.addEventListener("click", () => {
-  let intervalId = setInterval(gameLoop, 60);
-  let beanieInterval = setInterval(createBeanies, getRandomInt(500, 1000));
-  let visorInterval = setInterval(createVisors, 1000);
-  let gameTimerInterval = setInterval(gameTimer, 1000);
-});
+setTimeout(() => {
+  // Recalculate object positions
+  for (let i = 0; i < beanieArray.length; i++) {
+    beanieArray[i].x = Math.floor(Math.random() * (canvas.width - 50));
+  }
+  for (let i = 0; i < visorArray.length; i++) {
+    visorArray[i].x = Math.floor(Math.random() * (canvas.width - 50));
+  }
+  bandit.x = canvas.width / 2 - 75;
+  bandit.y = canvas.height - 125;
+  // initiate gameloops
+  intervalId = setInterval(gameLoop, 60);
+  beanieInterval = setInterval(createBeanies, getRandomInt(500, 1000));
+  visorInterval = setInterval(createVisors, 1000);
+  gameTimerInterval = setInterval(gameTimer, 1000);
+  console.log(bandit.x, bandit.y);
+  console.log(canvas.width, canvas.height);
+}, 3000);
 */
+let intervalId;
+let beanieInterval;
+let visorInterval;
+let gameTimerInterval;
 
-// causes the filltext to be misaligned
+// Reset / Start Game Button
 function reset() {
   canvas.setAttribute("height", getComputedStyle(canvas)["height"]);
   canvas.setAttribute("width", getComputedStyle(canvas)["width"]);
@@ -583,5 +585,23 @@ function reset() {
   intervalId = setInterval(gameLoop, 60);
   gameTimerInterval = setInterval(gameTimer, 1000);
 }
+
+startButton.addEventListener("click", () => {
+  startScreen.remove();
+  // Recalculate object positions
+  for (let i = 0; i < beanieArray.length; i++) {
+    beanieArray[i].x = Math.floor(Math.random() * (canvas.width - 50));
+  }
+  for (let i = 0; i < visorArray.length; i++) {
+    visorArray[i].x = Math.floor(Math.random() * (canvas.width - 50));
+  }
+  bandit.x = canvas.width / 2 - 75;
+  bandit.y = canvas.height - 125;
+  // initiate gameloops
+  intervalId = setInterval(gameLoop, 60);
+  beanieInterval = setInterval(createBeanies, getRandomInt(500, 1000));
+  visorInterval = setInterval(createVisors, getRandomInt(800, 1200));
+  gameTimerInterval = setInterval(gameTimer, 1000);
+});
 
 resetButton.addEventListener("click", reset);
