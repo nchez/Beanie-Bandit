@@ -68,6 +68,7 @@ Difficulties finding a way to move beanies without moving all of them at once.
 - Group more functions to prevent code repeats
 - Fix power-ups/power-downs (late additions)
   - If rainbow hat is grabbed and another is grabbed, speed is back to normal
+- Some objects spawn too far down on screen
 - Add instructions/explain what power-ups/power-downs are
 - Size elements, canvas, filltexts, etc so they work on different screen sizes
 - Make it more visually pleasing (read: change chartreuse color)

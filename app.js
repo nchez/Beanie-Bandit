@@ -673,6 +673,8 @@ function reset() {
   clearIntervals();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   setBackgroundSize();
+  canvas.style.backgroundColor = "rgba(255, 17, 0, 0)";
+  alpha = 0;
   gameScore = 0;
   spawnedHats = [];
   gameTime = 60;
