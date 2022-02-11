@@ -8,6 +8,9 @@ function togglePlay() {
 /* DOM SELECTORS -- EVENT LISTENERS */
 const startScreen = document.querySelector("#start-screen");
 const startButton = document.querySelector("#start-button");
+const highScoreLabel = document.querySelector("#score");
+const highScoreDiv = document.querySelector("#high-score");
+
 const canvas = document.querySelector("#canvas");
 const pressedKeys = {};
 document.addEventListener("keydown", (e) => (pressedKeys[e.key] = true));
@@ -95,6 +98,18 @@ img18.onload = function () {};
 let img19 = new Image();
 img19.src = "./Assets/visors/visor7.png";
 img19.onload = function () {};
+
+let rainbowBeanieImg = new Image();
+rainbowBeanieImg.src = "./Assets/beanies/rainbowbeanie.png";
+rainbowBeanieImg.onload = function () {};
+
+let methaneImg = new Image();
+methaneImg.src = "./Assets/methane.png";
+methaneImg.onload = function () {};
+
+let carbonDioxideImg = new Image();
+carbonDioxideImg.src = "./Assets/carbondioxide.png";
+carbonDioxideImg.onload = function () {};
 
 let banditimg = new Image();
 banditimg.src = "./Assets/bandit_right.png";
@@ -289,6 +304,33 @@ let visor7 = new Visor(
   img19,
   getRandomInt(5, 10)
 );
+
+let rainbowBeanie = new Crawler(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  rainbowBeanieImg,
+  10
+);
+
+let carbonDioxide = new Crawler(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  carbonDioxideImg,
+  10
+);
+let methane = new Crawler(
+  Math.floor(Math.random() * (canvas.width - 50)),
+  0,
+  50,
+  50,
+  methaneImg,
+  10
+);
+
 let bandit = new Crawler("", "", 100, 100, banditimg, 15);
 // ------------------------------------------
 
@@ -309,13 +351,30 @@ const beanieArray = [
   beanie12,
 ];
 
+const powerUps = [rainbowBeanie];
+
+const greenhouseGases = [methane, carbonDioxide];
+
 const visorArray = [visor1, visor2, visor3, visor4, visor5, visor6, visor7];
 
-// Game Timer and Incrementer
+// Game Timer, Incrementer, High Score Checker
 let gameScore = 0;
 let spawnedHats = [];
 let gameTime = 60;
 let visorCount = 0;
+let currentGameTime = 0;
+let scores = [];
+let highScore;
+
+function highScoreCheck() {
+  highScore = scores[0];
+  for (let i = 0; i < scores.length; i++) {
+    if (scores[i] > highScore) {
+      highScore = scores[i];
+    }
+  }
+  return highScore;
+}
 
 function gameTimer() {
   gameTime--;
@@ -325,7 +384,7 @@ function gameTimer() {
   }
 }
 
-// Create Beanies and Hats
+// Create Beanies, Hats, PowerUp/Down
 
 function createBeanies() {
   let randBeanieNum = Math.floor(Math.random() * 12);
@@ -337,6 +396,16 @@ function createVisors() {
   let randVisorNum = Math.floor(Math.random() * 7);
   visorArray[randVisorNum].render();
   spawnedHats.push(visorArray[randVisorNum]);
+}
+
+function createPowerUps() {
+  powerUps[0].render();
+  spawnedHats.push(powerUps[0]);
+}
+function createPowerDowns() {
+  let randPowerDownNum = Math.floor(Math.random() * 2);
+  greenhouseGases[randPowerDownNum].render();
+  spawnedHats.push(greenhouseGases[randPowerDownNum]);
 }
 
 // create Beanies, reset Beanie function
@@ -375,6 +444,20 @@ function movementHandler() {
     }
 }
 
+// PowerUps, PowerDowns
+
+function speedUpTimer() {
+  setTimeout(() => {
+    bandit.speed = 15;
+  }, 5000);
+}
+
+function speedDownTimer() {
+  setTimeout(() => {
+    bandit.speed = 15;
+  }, 5000);
+}
+
 // Collision Detection
 function detectHatHit() {
   for (let i = 0; i < spawnedHats.length; i++) {
@@ -382,8 +465,15 @@ function detectHatHit() {
     const hatsRight = bandit.x <= spawnedHats[i].x + spawnedHats[i].width;
     const hatsBottom = bandit.y <= spawnedHats[i].y + spawnedHats[i].height;
     if (hatsLeft && hatsRight && hatsBottom) {
+      currentGameTime = gameTime;
       if (spawnedHats[i] instanceof Visor) {
         visorCount++;
+      } else if (powerUps.includes(spawnedHats[i])) {
+        bandit.speed = 25;
+        speedUpTimer();
+      } else if (greenhouseGases.includes(spawnedHats[i])) {
+        bandit.speed = 8.5;
+        speedDownTimer();
       } else {
         gameScore++;
       }
@@ -458,34 +548,37 @@ function checkVisors() {
     ctx.fillStyle = "red";
     ctx.fillText("X", canvas.width - 141, 75);
     ctx.fillText("X", canvas.width - 98, 75);
-  }
-  // Not needed?
-  else if (visorCount === 3) {
+  } else if (visorCount === 3) {
     ctx.font = "30px serif";
     ctx.fillStyle = "red";
     ctx.fillText("X", canvas.width - 141, 75);
     ctx.fillText("X", canvas.width - 98, 75);
-    ctx.fillText("X", canvas.width - 56, 75);
   }
 }
 
 // Times up and Visor Condition
 function timesUp() {
   if (visorCount < 3) {
-    drawBox(canvas.width / 2 - 200, canvas.height / 2 - 50, 400, 150, "black");
+    drawBox(canvas.width / 2 - 200, canvas.height / 2 - 50, 400, 200, "black");
     clearInterval(intervalId);
     clearInterval(beanieInterval);
     clearInterval(visorInterval);
+    clearInterval(powerUpInterval);
+    clearInterval(greenhouseGasesInterval);
     ctx.font = "30px serif";
     ctx.fillStyle = "red";
     ctx.textBaseline = "middle";
     ctx.textAlign = "center";
     // Need to fix x, y positions so they are relative (screen size changes things), not absolute
-    ctx.fillText("TIME EXPIRED!", canvas.width / 2, canvas.height / 2 - 30);
-    ctx.fillText("YOUR SCORE:", canvas.width / 2, canvas.height / 2);
+    ctx.fillText("TIME EXPIRED! ", canvas.width / 2, canvas.height / 2 - 30);
+    ctx.fillText("EARTH HAS MELTED!", canvas.width / 2, canvas.height / 2);
+    ctx.fillText("YOUR SCORE:", canvas.width / 2, canvas.height / 2 + 30);
     ctx.font = "100px serif";
     ctx.fillStyle = "chartreuse";
-    ctx.fillText(gameScore, canvas.width / 2, canvas.height / 2 + 60);
+    ctx.fillText(gameScore, canvas.width / 2, canvas.height / 2 + 100);
+    scores.push(gameScore);
+    highScoreCheck();
+    highScoreLabel.innerText = highScore;
   }
 }
 
@@ -498,6 +591,8 @@ function threeVisors() {
     clearInterval(intervalId);
     clearInterval(beanieInterval);
     clearInterval(visorInterval);
+    clearInterval(powerUpInterval);
+    clearInterval(greenhouseGasesInterval);
     ctx.font = "30px serif";
     ctx.fillStyle = "red";
     ctx.textBaseline = "middle";
@@ -512,53 +607,67 @@ function threeVisors() {
     ctx.font = "100px serif";
     ctx.fillStyle = "chartreuse";
     ctx.fillText(gameScore, canvas.width / 2, canvas.height / 2 + 60);
+    scores.push(gameScore);
+    highScoreCheck();
+    highScoreLabel.innerText = highScore;
   }
 }
 
 // Dynamic Background and Growing Sun
+let alpha = 0.0;
+function backgroundTransition() {
+  // target alpha => 0.8
+  let increment = 0.8 / 1000;
+  canvas.style.backgroundColor = "rgba(255, 17, 0, " + alpha + ")";
+  alpha += increment;
+}
 
-// Game Loop and Reset
+// Function Grouping, Game Loop and Reset
+
+function createObjects() {
+  beanieInterval = setInterval(createBeanies, getRandomInt(500, 1000));
+  visorInterval = setInterval(createVisors, getRandomInt(850, 1100));
+  greenhouseGasesInterval = setInterval(
+    createPowerDowns,
+    getRandomInt(3800, 5200)
+  );
+  powerUpInterval = setInterval(createPowerUps, getRandomInt(3800, 5200));
+}
+
+function onScreenDisplay() {
+  timerCircle();
+  timerCountdown();
+  scoreSquare();
+  visorSquare();
+  scoreLabels();
+  checkVisors();
+}
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   setBackgroundSize();
+  backgroundTransition();
   movementHandler();
   bandit.render();
-  timerCircle();
-  timerCountdown();
   moveBeanies();
-  scoreSquare();
-  visorSquare();
-  checkVisors();
-  scoreLabels();
   detectHatHit();
+  // Can Remove Due to Function Grouping
+  // visorSquare();
+  // scoreSquare();
+  // checkVisors();
+  // scoreLabels();
+  // timerCircle();
+  // timerCountdown();
+  onScreenDisplay();
   threeVisors();
 }
 
-/*
-setTimeout(() => {
-  // Recalculate object positions
-  for (let i = 0; i < beanieArray.length; i++) {
-    beanieArray[i].x = Math.floor(Math.random() * (canvas.width - 50));
-  }
-  for (let i = 0; i < visorArray.length; i++) {
-    visorArray[i].x = Math.floor(Math.random() * (canvas.width - 50));
-  }
-  bandit.x = canvas.width / 2 - 75;
-  bandit.y = canvas.height - 125;
-  // initiate gameloops
-  intervalId = setInterval(gameLoop, 60);
-  beanieInterval = setInterval(createBeanies, getRandomInt(500, 1000));
-  visorInterval = setInterval(createVisors, 1000);
-  gameTimerInterval = setInterval(gameTimer, 1000);
-  console.log(bandit.x, bandit.y);
-  console.log(canvas.width, canvas.height);
-}, 3000);
-*/
 let intervalId;
 let beanieInterval;
 let visorInterval;
 let gameTimerInterval;
+let powerUpInterval;
+let greenhouseGasesInterval;
 
 // Reset / Start Game Button
 function reset() {
@@ -568,6 +677,8 @@ function reset() {
   clearInterval(beanieInterval);
   clearInterval(visorInterval);
   clearInterval(gameTimerInterval);
+  clearInterval(powerUpInterval);
+  clearInterval(greenhouseGasesInterval);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   setBackgroundSize();
   gameScore = 0;
@@ -580,9 +691,8 @@ function reset() {
   for (let i = 0; i < visorArray.length; i++) {
     visorArray[i].speed = getRandomInt(5, 10);
   }
-  beanieInterval = setInterval(createBeanies, getRandomInt(500, 1000));
-  visorInterval = setInterval(createVisors, 1000);
-  intervalId = setInterval(gameLoop, 60);
+  createObjects();
+  intervalId = setInterval(gameLoop, 40);
   gameTimerInterval = setInterval(gameTimer, 1000);
 }
 
@@ -598,10 +708,14 @@ startButton.addEventListener("click", () => {
   bandit.x = canvas.width / 2 - 75;
   bandit.y = canvas.height - 125;
   // initiate gameloops
-  intervalId = setInterval(gameLoop, 60);
-  beanieInterval = setInterval(createBeanies, getRandomInt(500, 1000));
-  visorInterval = setInterval(createVisors, getRandomInt(800, 1200));
+  // beanieInterval = setInterval(createBeanies, getRandomInt(500, 1000));
+  // visorInterval = setInterval(createVisors, getRandomInt(800, 1200));
+  // greenhouseGasesInterval = setInterval(createPowerDowns, 5000);
+  // powerUpInterval = setInterval(createPowerUps, 1000);
+  createObjects();
   gameTimerInterval = setInterval(gameTimer, 1000);
+  intervalId = setInterval(gameLoop, 40);
+  resetButton.addEventListener("click", reset);
 });
 
-resetButton.addEventListener("click", reset);
+// resetButton.addEventListener("click", reset);

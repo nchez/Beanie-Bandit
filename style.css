@@ -33,6 +33,8 @@ canvas {
   width: 100%;
   height: 100;
   position: relative;
+  background-color: rgba(255, 17, 0, 0); /* Tint color */
+  background-blend-mode: multiply;
 }
 
 #start-button {
@@ -62,10 +64,10 @@ canvas {
   display: grid;
   grid-gap: 1em;
   grid-template-rows: 1fr 0.1fr;
-  grid-template-columns: 0.2fr 0.6fr 0.2fr;
+  grid-template-columns: 0.15fr 0.5fr 0.15fr 0.2fr;
   grid-template-areas:
-    "game game game"
-    "btm-left btm-middle btm-right";
+    "game game game game"
+    "btm-left btm-middle high-score btm-right";
 }
 
 #btm-left,
@@ -74,7 +76,24 @@ canvas {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #222;
+  background-color: rgb(99, 98, 98);
+}
+
+#high-score {
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(99, 98, 98);
+}
+
+#score-label {
+  margin-top: 2px;
+  margin-bottom: 0px;
+}
+
+#score {
+  margin-top: 0px;
+  font-size: 50px;
+  margin-bottom: 0px;
 }
 
 image {
@@ -87,10 +106,16 @@ main {
 
 #btm-left {
   grid-area: btm-left;
-  /* background-color: #222; */
+}
+
+#btm-middle {
+  grid-area: btm-middle;
+}
+
+#high-score {
+  grid-area: high-score;
 }
 
 #btm-right {
   grid-area: btm-right;
-  /* background-color: #222; */
 }

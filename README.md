@@ -34,3 +34,46 @@ The player can move horizontally to catch the beanies and dodge the visors as th
 - Horizontal moving enemies at bottom of screen that player must jump or crouch to dodge
 - Powerup 'special' beanies and powerdown 'special' visors
 - Dyamic background that changes from blue to red as timer counts down
+
+## References
+
+For beanies:
+
+- sportsbasement.com
+- https://cdn.shopify.com/s/files/1/0442/0203/3317/products/PhotoRoom_20210222_020308_620x.png?v=1614020090
+- https://shop.sportsbasement.com/products/acrylic-watch-hat
+- https://www.nixon.com/products/jorgensen-wool-beanie-navy
+- https://www.on-running.com/en-us/products/merino-beanie
+- https://www.tracksmith.com/products/prospect-beanie
+- https://www.shopneedco.com/products/skull-tag-beanie
+- https://madehereonline.com/products/organic-cotton-beanie-by-rustek
+- https://pngset.com/download-free-png-ehdtr
+
+For visors:
+
+- https://www.greatgolfmemories.com/mastersvisorw.html
+- https://www.titleist.com/product/tour-visor/154HA1T.html
+- https://www.pgatoursuperstore.com/sp-20-hats%3A-arobill-visor/2000000008917.html
+- https://league-legacy.com/collections/visors
+- http://clipart-library.com/clip-art/145-1458372_transparent-visors-red-sun-visor-cap-png.htm
+- https://www.facebook.com/towntalkheadwear/
+
+For greenhouse gases:
+
+- https://www.pinclipart.com/maxpin/iTxRio/
+- https://www.flaticon.com/premium-icon/ch4_2354749
+-
+
+For player image:
+
+- https://the-youtooz.fandom.com/wiki/Oliver_Tree_(1FT)
+
+For search engine:
+
+- google.com
+
+For music:
+
+- Oliver Tree "Let Me Down"
+- MP3:
+  - https://www.youtube.com/watch?v=CX6ewov0qds&t=8s
