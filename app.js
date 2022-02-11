@@ -504,9 +504,6 @@ function timerCircle() {
   ctx.arc(canvas.width / 2, 50, 40, 0, 2 * Math.PI, false);
   ctx.fillStyle = "black";
   ctx.fill();
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = "red";
-  ctx.stroke();
 }
 
 function scoreSquare() {
