@@ -2,6 +2,8 @@
 
 Javascript game where beanies need to be caught and visors must be avoided.
 
+Link to game: https://nchez.github.io/Beanie-Bandit/
+
 ## Where Did All These Beanies and Visors Come From?
 
 Thanks to global warming (aka climate change) beanies are falling from the sky. It just so happens the Beanie Bandit is in town and they want as many beanies as possible.
