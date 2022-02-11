@@ -14,26 +14,63 @@ Another side effect of climate change (arguably the worst side effect) is visors
 
 Collect as many beanies as possible in the alloted time while avoiding the visors! Three visor grabs and the game is over!
 The player can move horizontally to catch the beanies and dodge the visors as they are falling from the ever-warming sky!
+Player's score increases by 1 for each touched. If three visors are touched, the game is over.
 
-### Wireframe / Sketch
+## Development
+
+### Wireframe
 
 ![wireframe](/Assets/wireframe.png)
 
-## MVP
+### Finished Product
 
-- Implement staggered/random beanies and visors falling down screen
-- Implement game score that increments when beanies collide with player and decrement when visors collide with player
-- Have player move horizontally to collect and dodge beanies and visors respectively
-- Implement game countdown
-- Implement visors collided display on-screen and end game when player hits three visors
-- Implement new game / reset button
+![gameplay screenshot](/Assets/Gameplay.png)
 
-## Stretch Goals
+### MVP
 
-- Have random beanie images instead of 1 beanie image
-- Horizontal moving enemies at bottom of screen that player must jump or crouch to dodge
-- Powerup 'special' beanies and powerdown 'special' visors
-- Dyamic background that changes from blue to red as timer counts down
+- [x] Staggered/random beanies and visors falling down screen
+- [x] Game score that increments when beanies collide with player and decrement when visors collide with player
+- [x] Player can move horizontally to collect and dodge beanies and visors respectively
+- [x] Game countdown; game over when time reaches 0
+- [x] Visors collided count display on-screen and end game when player hits three visors
+- [x] New Game / Reset button
+
+### Stretch Goals
+
+- [x] Random beanie images instead of 1 beanie image
+- [ ] Horizontal moving enemies at bottom of screen that player must jump or crouch to dodge
+- [x] Powerup 'special' beanies and powerdown 'special' visors
+- [x] Dyamic background that changes from blue to red as timer counts down
+
+### Technologies Used
+
+- JavaScript, Canvas API, CSS (some grid), HTML
+- Google.com (the search engine)
+- Weston, Jason, Andy
+
+### Code Highlights
+
+Difficulties finding a way to move beanies without moving all of them at once.
+
+- Create a "spawn" array to keep track of falling objects on screen.
+- Write create/spawn functions for visors, beanies, powerups, powerdowns
+
+  - Different intervals for different classes (type of objects)
+  - Add objects to "spawn" array as they are created
+    ![spawn function](/Assets/Spawn_Functions.png)
+
+- Function to make onscreen objects "fall"
+  - Remove objects from spawn array once they reach certain 'y' positon
+    ![drop function](/Assets/Make_Objects_Fall.png)
+
+### Refactoring, Bug Fixes, Improvements
+
+- Group more functions to prevent code repeats
+- Fix power-ups/power-downs (late additions)
+  - If rainbow hat is grabbed and another is grabbed, speed is back to normal
+- Add instructions/explain what power-ups/power-downs are
+- Size elements, canvas, filltexts, etc so they work on different screen sizes
+- Make it more visually pleasing (read: change chartreuse color)
 
 ## References
 

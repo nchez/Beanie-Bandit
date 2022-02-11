@@ -556,7 +556,7 @@ function checkVisors() {
   }
 }
 
-// Times up and Visor Condition
+// Times up and Visor Condition -- Game Over Conditions
 function timesUp() {
   if (visorCount < 3) {
     drawBox(canvas.width / 2 - 200, canvas.height / 2 - 50, 400, 200, "black");
@@ -588,16 +588,11 @@ function threeVisors() {
     ctx.fillStyle = "red";
     ctx.fillText("X", canvas.width - 56, 75);
     drawBox(canvas.width / 2 - 200, canvas.height / 2 - 50, 400, 150, "black");
-    clearInterval(intervalId);
-    clearInterval(beanieInterval);
-    clearInterval(visorInterval);
-    clearInterval(powerUpInterval);
-    clearInterval(greenhouseGasesInterval);
+    clearIntervals();
     ctx.font = "30px serif";
     ctx.fillStyle = "red";
     ctx.textBaseline = "middle";
     ctx.textAlign = "center";
-    // Need to fix x, y positions so they are relative (screen size changes things), not absolute
     ctx.fillText(
       "EW, THREE VISORS HIT!",
       canvas.width / 2,
@@ -622,7 +617,7 @@ function backgroundTransition() {
   alpha += increment;
 }
 
-// Function Grouping, Game Loop and Reset
+// Function Grouping, clearIntervals
 
 function createObjects() {
   beanieInterval = setInterval(createBeanies, getRandomInt(500, 1000));
@@ -643,6 +638,15 @@ function onScreenDisplay() {
   checkVisors();
 }
 
+function clearIntervals() {
+  clearInterval(intervalId);
+  clearInterval(beanieInterval);
+  clearInterval(visorInterval);
+  clearInterval(powerUpInterval);
+  clearInterval(gameTimerInterval);
+  clearInterval(greenhouseGasesInterval);
+}
+
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   setBackgroundSize();
@@ -651,17 +655,10 @@ function gameLoop() {
   bandit.render();
   moveBeanies();
   detectHatHit();
-  // Can Remove Due to Function Grouping
-  // visorSquare();
-  // scoreSquare();
-  // checkVisors();
-  // scoreLabels();
-  // timerCircle();
-  // timerCountdown();
   onScreenDisplay();
   threeVisors();
 }
-
+//  Declare Interval Ids for Clear Interval
 let intervalId;
 let beanieInterval;
 let visorInterval;
@@ -673,12 +670,7 @@ let greenhouseGasesInterval;
 function reset() {
   canvas.setAttribute("height", getComputedStyle(canvas)["height"]);
   canvas.setAttribute("width", getComputedStyle(canvas)["width"]);
-  clearInterval(intervalId);
-  clearInterval(beanieInterval);
-  clearInterval(visorInterval);
-  clearInterval(gameTimerInterval);
-  clearInterval(powerUpInterval);
-  clearInterval(greenhouseGasesInterval);
+  clearIntervals();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   setBackgroundSize();
   gameScore = 0;
@@ -687,9 +679,11 @@ function reset() {
   visorCount = 0;
   for (let i = 0; i < beanieArray.length; i++) {
     beanieArray[i].speed = getRandomInt(5, 10);
+    beanieArray[i].y = 0;
   }
   for (let i = 0; i < visorArray.length; i++) {
     visorArray[i].speed = getRandomInt(5, 10);
+    visorArray[i].y = 0;
   }
   createObjects();
   intervalId = setInterval(gameLoop, 40);
