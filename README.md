@@ -46,7 +46,7 @@ Player's score increases by 1 for each touched. If three visors are touched, the
 
 - JavaScript, Canvas API, CSS (some grid), HTML
 - Google.com (the search engine)
-- Weston, Jason, Andy
+- Andy for emotional and technical support
 
 ### Code Highlights
 
