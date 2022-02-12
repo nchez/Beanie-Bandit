@@ -96,8 +96,8 @@ canvas {
   margin-bottom: 0px;
 }
 
-image {
-  border: 5px solid black;
+.game-option {
+  border-radius: 10px;
 }
 
 main {

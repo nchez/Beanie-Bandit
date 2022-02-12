@@ -29,7 +29,7 @@
         </div>
         <canvas id="canvas"></canvas>
       </main>
-      <aside id="btm-left">
+      <aside class="game-option" id="btm-left">
         <audio
           id="myAudio"
           src="./Assets/Oliver_Tree_Let_Me_Down_8bit.mp3"
@@ -38,16 +38,22 @@
         ></audio>
         <a onClick="togglePlay()">Press to Play/Pause Music</a>
       </aside>
-      <aside id="btm-middle">
+      <aside class="game-option" id="btm-middle">
         <h2>
           Use A/D keys or left/right arrows to collect beanies and avoid visors!
         </h2>
       </aside>
-      <div title="High Score will be erased on page refresh" id="high-score">
+      <div
+        class="game-option"
+        title="High Score will be erased on page refresh"
+        id="high-score"
+      >
         <h2 id="score-label">High Score</h2>
         <h2 id="score">0</h2>
       </div>
-      <aside id="btm-right"><h2 id="status">RESET / NEW GAME</h2></aside>
+      <aside class="game-option" id="btm-right">
+        <h2 id="status">RESET / NEW GAME</h2>
+      </aside>
     </div>
     <script defer src="app.js"></script>
   </body>

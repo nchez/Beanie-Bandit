@@ -1,3 +1,5 @@
+function sizeStartScreen() {}
+
 /* Oliver Tree Audio */
 let myAudio = document.getElementById("myAudio");
 
@@ -10,6 +12,7 @@ const startScreen = document.querySelector("#start-screen");
 const startButton = document.querySelector("#start-button");
 const highScoreLabel = document.querySelector("#score");
 const highScoreDiv = document.querySelector("#high-score");
+const main = document.querySelector("main");
 
 const canvas = document.querySelector("#canvas");
 const pressedKeys = {};
@@ -122,6 +125,16 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
+function getRandomIntQuarter(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  const quarterArray = [0, 1, 2, 3];
+  return (
+    Math.floor(Math.random() * (max - min) + min) +
+    0.25 * quarterArray[getRandomInt(0, quarterArray.length)]
+  );
+}
+
 function drawBox(x, y, width, height, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, width, height);
@@ -157,7 +170,7 @@ let beanie1 = new Crawler(
   50,
   50,
   img1,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let beanie2 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -165,7 +178,7 @@ let beanie2 = new Crawler(
   50,
   50,
   img2,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let beanie3 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -173,7 +186,7 @@ let beanie3 = new Crawler(
   50,
   50,
   img3,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let beanie4 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -181,7 +194,7 @@ let beanie4 = new Crawler(
   50,
   50,
   img4,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let beanie5 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -189,7 +202,7 @@ let beanie5 = new Crawler(
   50,
   50,
   img5,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let beanie6 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -197,7 +210,7 @@ let beanie6 = new Crawler(
   50,
   50,
   img6,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let beanie7 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -205,7 +218,7 @@ let beanie7 = new Crawler(
   50,
   50,
   img7,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let beanie8 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -213,7 +226,7 @@ let beanie8 = new Crawler(
   50,
   50,
   img8,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let beanie9 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -221,7 +234,7 @@ let beanie9 = new Crawler(
   50,
   50,
   img9,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let beanie10 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -229,7 +242,7 @@ let beanie10 = new Crawler(
   50,
   50,
   img10,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let beanie11 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -237,7 +250,7 @@ let beanie11 = new Crawler(
   50,
   50,
   img11,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let beanie12 = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -245,7 +258,7 @@ let beanie12 = new Crawler(
   50,
   50,
   img12,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 
 let visor1 = new Visor(
@@ -254,7 +267,7 @@ let visor1 = new Visor(
   50,
   50,
   img13,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let visor2 = new Visor(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -262,7 +275,7 @@ let visor2 = new Visor(
   50,
   50,
   img14,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let visor3 = new Visor(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -270,7 +283,7 @@ let visor3 = new Visor(
   50,
   50,
   img15,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let visor4 = new Visor(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -278,7 +291,7 @@ let visor4 = new Visor(
   50,
   50,
   img16,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let visor5 = new Visor(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -286,7 +299,7 @@ let visor5 = new Visor(
   50,
   50,
   img17,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let visor6 = new Visor(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -294,7 +307,7 @@ let visor6 = new Visor(
   50,
   50,
   img18,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 let visor7 = new Visor(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -302,7 +315,7 @@ let visor7 = new Visor(
   50,
   50,
   img19,
-  getRandomInt(5, 10)
+  getRandomIntQuarter(1, 3)
 );
 
 let rainbowBeanie = new Crawler(
@@ -311,7 +324,7 @@ let rainbowBeanie = new Crawler(
   50,
   50,
   rainbowBeanieImg,
-  10
+  getRandomIntQuarter(1, 3)
 );
 
 let carbonDioxide = new Crawler(
@@ -320,7 +333,7 @@ let carbonDioxide = new Crawler(
   50,
   50,
   carbonDioxideImg,
-  10
+  getRandomIntQuarter(1, 3)
 );
 let methane = new Crawler(
   Math.floor(Math.random() * (canvas.width - 50)),
@@ -328,10 +341,10 @@ let methane = new Crawler(
   50,
   50,
   methaneImg,
-  10
+  getRandomIntQuarter(1, 3)
 );
 
-let bandit = new Crawler("", "", 100, 100, banditimg, 15);
+let bandit = new Crawler("", "", 100, 100, banditimg, 3.75);
 // ------------------------------------------
 
 // Beanie and Visor Arrays
@@ -419,7 +432,7 @@ function moveBeanies() {
       } else if (spawnedHats[i].y > canvas.height - 80) {
         spawnedHats[i].y = 0;
         spawnedHats[i].x = Math.floor(Math.random() * (canvas.width - 50));
-        spawnedHats[i].speed = getRandomInt(5, 10);
+        spawnedHats[i].speed = getRandomIntQuarter(1, 3);
         spawnedHats.splice(i, 1);
         i--;
       }
@@ -448,13 +461,13 @@ function movementHandler() {
 
 function speedUpTimer() {
   setTimeout(() => {
-    bandit.speed = 15;
+    bandit.speed = 3.75;
   }, 5000);
 }
 
 function speedDownTimer() {
   setTimeout(() => {
-    bandit.speed = 15;
+    bandit.speed = 3.75;
   }, 5000);
 }
 
@@ -469,17 +482,17 @@ function detectHatHit() {
       if (spawnedHats[i] instanceof Visor) {
         visorCount++;
       } else if (powerUps.includes(spawnedHats[i])) {
-        bandit.speed = 25;
+        bandit.speed = 7.5;
         speedUpTimer();
       } else if (greenhouseGases.includes(spawnedHats[i])) {
-        bandit.speed = 8.5;
+        bandit.speed = 1.875;
         speedDownTimer();
       } else {
         gameScore++;
       }
       spawnedHats[i].y = 0;
       spawnedHats[i].x = Math.floor(Math.random() * (canvas.width - 50));
-      spawnedHats[i].speed = getRandomInt(5, 10);
+      spawnedHats[i].speed = getRandomIntQuarter(1, 3);
       spawnedHats.splice(i, 1);
       i--;
     }
@@ -677,15 +690,15 @@ function reset() {
   gameTime = 60;
   visorCount = 0;
   for (let i = 0; i < beanieArray.length; i++) {
-    beanieArray[i].speed = getRandomInt(5, 10);
+    beanieArray[i].speed = getRandomIntQuarter(1, 3);
     beanieArray[i].y = 0;
   }
   for (let i = 0; i < visorArray.length; i++) {
-    visorArray[i].speed = getRandomInt(5, 10);
+    visorArray[i].speed = getRandomIntQuarter(1, 3);
     visorArray[i].y = 0;
   }
   createObjects();
-  intervalId = setInterval(gameLoop, 40);
+  intervalId = setInterval(gameLoop, 10);
   gameTimerInterval = setInterval(gameTimer, 1000);
 }
 
@@ -707,8 +720,9 @@ startButton.addEventListener("click", () => {
   // powerUpInterval = setInterval(createPowerUps, 1000);
   createObjects();
   gameTimerInterval = setInterval(gameTimer, 1000);
-  intervalId = setInterval(gameLoop, 40);
+  intervalId = setInterval(gameLoop, 10);
   resetButton.addEventListener("click", reset);
 });
 
+console.log(getComputedStyle(main).getPropertyValue("width"));
 // resetButton.addEventListener("click", reset);
