@@ -622,7 +622,7 @@ function threeVisors() {
 let alpha = 0.0;
 function backgroundTransition() {
   // target alpha => 0.8
-  let increment = 0.8 / 1000;
+  let increment = 0.8 / 4 / 1000;
   canvas.style.backgroundColor = "rgba(255, 17, 0, " + alpha + ")";
   alpha += increment;
 }
