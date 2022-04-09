@@ -1,0 +1,23 @@
+{
+  "name": "beanie-bandit",
+  "version": "1.0.0",
+  "description": "Javascript game where beanies need to be caught and visors must be avoided.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nchez/Beanie-Bandit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nchez/Beanie-Bandit/issues"
+  },
+  "homepage": "https://github.com/nchez/Beanie-Bandit#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
